@@ -829,7 +829,15 @@
     el.addEventListener('keypress', function(e){
       if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); replay(); }
     });
-    window.addEventListener('load', replay);
+    // Don't rely solely on window 'load' — it can fire late or not at all
+    // on some mobile browsers, leaving the dominoes stuck upright.
+    if(document.readyState === 'complete'){
+      replay();
+    } else {
+      window.addEventListener('load', replay);
+      document.addEventListener('DOMContentLoaded', replay);
+    }
+    window.addEventListener('pageshow', replay);
   }
   // duplicate marquee content for seamless loop
   var track = document.getElementById('marquee-track');
