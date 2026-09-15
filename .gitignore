@@ -1,0 +1,32 @@
+# QA / debug screenshots and throwaway scripts — not deliverables
+qa/
+*.jpg
+audit_check-1.png
+launch_check-1.png
+onepager_check-1.png
+shot-*.png
+shot.js
+shot2.js
+shot3.js
+shot_dark.js
+shot_dark2.js
+shot_price.js
+shot_v2.js
+shot_v3.js
+shot_v3b.js
+crop-*.png
+v2-*.png
+v3-*.png
+price-check*.png
+slice-*.png
+pdf.js
+
+# Superseded drafts
+nudge-landing-v2.html
+nudge-logo-concepts.html
+
+# Reference screenshots (design research, not project assets)
+reference/
+
+# OS cruft
+.DS_Store

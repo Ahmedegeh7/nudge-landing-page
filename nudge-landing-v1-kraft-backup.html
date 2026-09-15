@@ -1,0 +1,648 @@
+<title>Nudge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Caveat:wght@600&display=swap">
+<style>
+  :root{
+    --ink:#1E2A2F;
+    --paper:#EDE3CF;
+    --paper-2:#E2D3AF;
+    --accent:#E2531D;
+    --accent-2:#C98A1F;
+    --line:#1F4E5F;
+    --ink-soft:#4B5A57;
+    --stamp-red:#B23A2E;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#EDE3CF;
+      --paper:#15191B;
+      --paper-2:#1D2224;
+      --accent:#FF6B3D;
+      --accent-2:#F0B23D;
+      --line:#79B3C2;
+      --ink-soft:#B9AF9C;
+      --stamp-red:#FF6B5B;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#EDE3CF;
+    --paper:#15191B;
+    --paper-2:#1D2224;
+    --accent:#FF6B3D;
+    --accent-2:#F0B23D;
+    --line:#79B3C2;
+    --ink-soft:#B9AF9C;
+    --stamp-red:#FF6B5B;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ text-size-adjust:100%; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Space Mono", "Courier New", monospace;
+    padding:0 20px;
+  }
+  a{ color:inherit; }
+  img{ max-width:100%; }
+  ::selection{ background:var(--accent); color:var(--paper); }
+
+  .wrap{ max-width:920px; margin:0 auto; }
+
+  h1,h2,h3{
+    font-family:"Anton", "Arial Narrow", sans-serif;
+    font-weight:400;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    text-wrap:balance;
+    margin:0;
+    line-height:0.95;
+  }
+
+  .eyebrow{
+    font-size:0.72rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    font-weight:700;
+  }
+
+  .note{
+    font-family:"Caveat","Segoe Script",cursive;
+    font-size:1.35rem;
+    color:var(--stamp-red);
+    display:inline-block;
+    transform:rotate(-3deg);
+  }
+
+  /* ---- header / masthead ---- */
+  header.mast{
+    padding-block:22px 10px;
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:12px;
+    flex-wrap:wrap;
+    border-bottom:3px solid var(--ink);
+  }
+  .brand{
+    font-family:"Anton", sans-serif;
+    font-size:1.9rem;
+    letter-spacing:0.5px;
+  }
+  .brand span{
+    color:var(--accent);
+    display:inline-block;
+    transform:translateY(-3px) rotate(-18deg);
+    margin-left:1px;
+  }
+  .mast-right{
+    text-align:right;
+    font-size:0.78rem;
+    color:var(--ink-soft);
+    line-height:1.5;
+  }
+
+  /* ---- ticker ---- */
+  .ticker{
+    overflow:hidden;
+    white-space:nowrap;
+    background:var(--stamp-red);
+    border-bottom:3px solid var(--ink);
+    margin-inline:-20px;
+  }
+  .ticker-track{
+    display:inline-flex;
+    animation:marquee 24s linear infinite;
+    will-change:transform;
+  }
+  .ticker-item{
+    font-family:"Anton", sans-serif;
+    color:var(--paper);
+    font-size:0.82rem;
+    letter-spacing:0.09em;
+    padding-block:9px;
+    padding-right:2px;
+    white-space:nowrap;
+  }
+  @keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce){ .ticker-track{ animation:none; } }
+
+  /* ---- perforation tear ---- */
+  .tear{
+    height:22px;
+    background-image:radial-gradient(circle at 11px 11px, var(--paper) 8px, transparent 8.6px);
+    background-size:22px 22px;
+    background-repeat:repeat-x;
+    background-position:center;
+  }
+  .tear.on-2{ background-image:radial-gradient(circle at 11px 11px, var(--paper-2) 8px, transparent 8.6px); }
+
+  /* ---- hero ---- */
+  .hero{
+    padding-block:46px 30px;
+    display:grid;
+    gap:22px;
+  }
+  .dominoes{
+    display:flex;
+    align-items:flex-end;
+    gap:9px;
+    height:78px;
+    padding-left:2px;
+  }
+  .domino{
+    width:13px;
+    height:64px;
+    background:var(--ink);
+    border-radius:2px 2px 1px 1px;
+    transform-origin:bottom left;
+    box-shadow:2px 2px 0 rgba(0,0,0,0.08);
+  }
+  .domino.last{ background:var(--accent); }
+  @keyframes tip{ to{ transform:rotate(83deg) translate(1px,3px); } }
+  .dominoes.play .domino:nth-child(1){ animation:tip 0.28s ease-in forwards; animation-delay:0.10s; }
+  .dominoes.play .domino:nth-child(2){ animation:tip 0.28s ease-in forwards; animation-delay:0.24s; }
+  .dominoes.play .domino:nth-child(3){ animation:tip 0.28s ease-in forwards; animation-delay:0.38s; }
+  .dominoes.play .domino:nth-child(4){ animation:tip 0.28s ease-in forwards; animation-delay:0.52s; }
+  .dominoes.play .domino:nth-child(5){ animation:tip 0.28s ease-in forwards; animation-delay:0.66s; }
+  .dominoes.play .domino:nth-child(6){ animation:tip 0.28s ease-in forwards; animation-delay:0.80s; }
+  .dominoes.play .domino:nth-child(7){ animation:tip 0.28s ease-in forwards; animation-delay:0.94s; }
+  .dominoes.play .domino:nth-child(8){ animation:tip 0.28s ease-in forwards; animation-delay:1.08s; }
+  .dominoes.play .domino:nth-child(9){ animation:tip 0.28s ease-in forwards; animation-delay:1.22s; }
+  @media (prefers-reduced-motion: reduce){
+    .dominoes.play .domino{ animation:none !important; }
+    .dominoes.play .domino:not(.last):not(.next-last){ transform:rotate(83deg) translate(1px,3px); }
+  }
+
+  .hero h1{
+    font-size:clamp(2.6rem, 8vw, 5.1rem);
+  }
+  .hero-title{ display:flex; flex-direction:column; gap:2px; }
+  .ht-line1{
+    font-size:clamp(1.1rem,3.4vw,1.6rem);
+    color:var(--ink-soft);
+    letter-spacing:0.06em;
+  }
+  .ht-hero{
+    font-size:clamp(4.2rem,17vw,9.5rem);
+    color:var(--accent);
+    transform:rotate(-2deg);
+    text-shadow:5px 5px 0 var(--ink);
+    margin-block:2px 6px;
+    display:inline-block;
+  }
+  .ht-line3{
+    font-size:clamp(1.7rem,6vw,3rem);
+    border-bottom:5px solid var(--accent-2);
+    display:inline-block;
+    padding-bottom:2px;
+  }
+  .dominoes{ cursor:pointer; }
+  .dominoes-hint{
+    font-family:"Caveat","Segoe Script",cursive;
+    font-size:1.1rem;
+    color:var(--ink-soft);
+    margin-top:-4px;
+  }
+  .hero-sub{
+    max-width:52ch;
+    font-size:1.05rem;
+    line-height:1.55;
+    color:var(--ink-soft);
+  }
+  .hero-row{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    align-items:center;
+    margin-top:6px;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:"Space Mono", monospace;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    font-size:0.88rem;
+    padding:13px 22px;
+    border:3px solid var(--ink);
+    border-radius:3px;
+    background:var(--accent);
+    color:var(--paper);
+    text-decoration:none;
+    box-shadow:4px 4px 0 var(--ink);
+    transition:transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .btn:hover{ transform:translate(2px,2px); box-shadow:2px 2px 0 var(--ink); }
+  .btn.ghost{
+    background:transparent;
+    color:var(--ink);
+    box-shadow:4px 4px 0 var(--line);
+    border-color:var(--line);
+  }
+  .btn.ghost:hover{ box-shadow:2px 2px 0 var(--line); }
+
+  .stamp{
+    display:inline-block;
+    border:3px double var(--stamp-red);
+    color:var(--stamp-red);
+    font-family:"Anton", sans-serif;
+    font-size:0.95rem;
+    letter-spacing:0.08em;
+    padding:7px 14px;
+    transform:rotate(-6deg);
+    border-radius:4px;
+  }
+
+  .sticker{
+    display:inline-block;
+    font-family:"Space Mono",monospace;
+    font-weight:700;
+    font-size:0.68rem;
+    letter-spacing:0.09em;
+    text-transform:uppercase;
+    padding:5px 11px;
+    background:rgba(226,83,29,0.14);
+    border:1px dashed var(--accent);
+    color:var(--accent);
+    transform:rotate(-3deg);
+  }
+  .sticker.tilt-right{ transform:rotate(3deg); background:rgba(201,138,31,0.16); border-color:var(--accent-2); color:var(--accent-2); }
+
+  .ribbon-wrap{ position:relative; margin-top:22px; }
+  .ribbon{
+    position:absolute;
+    top:-14px;
+    right:10px;
+    width:168px;
+    text-align:center;
+    background:var(--stamp-red);
+    color:var(--paper);
+    font-family:"Anton", sans-serif;
+    font-size:0.6rem;
+    letter-spacing:0.08em;
+    padding:5px 0;
+    transform:rotate(6deg);
+    box-shadow:0 2px 5px rgba(0,0,0,0.25);
+    border:2px solid var(--ink);
+    border-radius:3px;
+    z-index:2;
+  }
+
+  .hazard{
+    height:14px;
+    margin-inline:-20px;
+    background:repeating-linear-gradient(45deg, var(--ink), var(--ink) 10px, var(--accent) 10px, var(--accent) 20px);
+  }
+
+  /* ---- section shell ---- */
+  section{ padding-block:38px; }
+  section.card-bg{ background:var(--paper-2); margin-inline:-20px; padding-inline:20px; }
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:16px;
+    flex-wrap:wrap;
+    margin-bottom:22px;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:10px;
+  }
+  .section-head h2{ font-size:clamp(1.5rem,4vw,2.3rem); }
+
+  /* ---- the ticket (pain points) ---- */
+  .ticket{
+    border:2px solid var(--ink);
+    border-radius:4px;
+    padding:20px 22px;
+    background:var(--paper);
+    max-width:560px;
+  }
+  .ticket-row{
+    display:flex;
+    justify-content:space-between;
+    gap:14px;
+    padding:9px 0;
+    border-bottom:1px dashed var(--ink-soft);
+    font-size:0.92rem;
+  }
+  .ticket-row:last-child{ border-bottom:none; }
+  .ticket-row .val{ font-variant-numeric:tabular-nums; font-weight:700; color:var(--stamp-red); white-space:nowrap; }
+
+  /* ---- services grid ---- */
+  .services{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:14px;
+  }
+  .svc{
+    border:2px solid var(--ink);
+    border-radius:4px;
+    padding:16px 16px 18px;
+    background:var(--paper);
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .svc .tag{
+    font-size:0.68rem;
+    font-weight:700;
+    letter-spacing:0.1em;
+    color:var(--ink-soft);
+    font-family:"Space Mono",monospace;
+  }
+  .svc h3{ font-size:1.15rem; }
+  .svc p{ font-size:0.86rem; line-height:1.5; color:var(--ink-soft); margin:0; }
+  .svc.advanced{ border-style:dashed; }
+  .svc.advanced .tag{ color:var(--accent-2); }
+
+  /* ---- how it works ---- */
+  .steps{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+  }
+  .step{ display:flex; flex-direction:column; gap:8px; }
+  .step-num{
+    font-family:"Anton",sans-serif;
+    font-size:2.1rem;
+    color:var(--accent);
+    line-height:1;
+  }
+  .step h3{ font-size:1.05rem; }
+  .step p{ font-size:0.86rem; line-height:1.5; color:var(--ink-soft); margin:0; }
+
+  /* ---- pricing / invoice ---- */
+  .invoice{
+    border:2px solid var(--ink);
+    border-radius:4px;
+    overflow:hidden;
+    background:var(--paper);
+  }
+  .invoice-head, .invoice-row{
+    display:grid;
+    grid-template-columns:1fr 2.4fr auto;
+    gap:12px;
+    padding:12px 16px;
+    align-items:baseline;
+  }
+  .invoice-head{
+    background:var(--ink);
+    color:var(--paper);
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    font-weight:700;
+  }
+  .invoice-row{ border-top:1px dashed var(--ink-soft); font-size:0.88rem; }
+  .invoice-row .price{ font-variant-numeric:tabular-nums; font-weight:700; white-space:nowrap; text-align:right; }
+  .invoice-row .desc{ color:var(--ink-soft); }
+  .invoice-foot{
+    padding:12px 16px;
+    font-size:0.78rem;
+    color:var(--ink-soft);
+    border-top:2px solid var(--ink);
+  }
+
+  /* ---- CTA ---- */
+  .cta{
+    text-align:center;
+    padding-block:52px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:16px;
+  }
+  .cta h2{ font-size:clamp(2rem,6vw,3.2rem); max-width:16ch; }
+
+  footer{
+    border-top:3px solid var(--ink);
+    padding-block:20px 34px;
+    display:flex;
+    justify-content:space-between;
+    gap:14px;
+    flex-wrap:wrap;
+    font-size:0.78rem;
+    color:var(--ink-soft);
+  }
+  footer .fbrand{ font-family:"Anton",sans-serif; color:var(--ink); font-size:1rem; letter-spacing:0.5px; }
+  footer .fbrand span{ color:var(--accent); display:inline-block; transform:translateY(-2px) rotate(-18deg); }
+
+  @media (max-width:720px){
+    .services{ grid-template-columns:1fr 1fr; }
+    .steps{ grid-template-columns:1fr; }
+    .invoice-head{ display:none; }
+    .invoice-row{ grid-template-columns:1fr; gap:2px; }
+    .invoice-row .price{ text-align:left; }
+    .invoice-row span:first-child{ font-weight:700; }
+  }
+  @media (max-width:460px){
+    .services{ grid-template-columns:1fr; }
+    body{ padding:0 16px; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div class="brand">Nudge<span>.</span></div>
+    <div class="mast-right">WORK ORDER NO. 001<br>ISSUED: SERVICE BUSINESSES, EVERYWHERE</div>
+  </header>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span class="ticker-item">MISSED CALLS&nbsp;&nbsp;•&nbsp;&nbsp;DOUBLE-BOOKED JOBS&nbsp;&nbsp;•&nbsp;&nbsp;MANUAL INVOICES&nbsp;&nbsp;•&nbsp;&nbsp;PHONE TAG&nbsp;&nbsp;•&nbsp;&nbsp;SPREADSHEET SUNDAYS&nbsp;&nbsp;•&nbsp;&nbsp;FORGOTTEN FOLLOW-UPS&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+      <span class="ticker-item">MISSED CALLS&nbsp;&nbsp;•&nbsp;&nbsp;DOUBLE-BOOKED JOBS&nbsp;&nbsp;•&nbsp;&nbsp;MANUAL INVOICES&nbsp;&nbsp;•&nbsp;&nbsp;PHONE TAG&nbsp;&nbsp;•&nbsp;&nbsp;SPREADSHEET SUNDAYS&nbsp;&nbsp;•&nbsp;&nbsp;FORGOTTEN FOLLOW-UPS&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="dominoes" id="dominoes" role="button" tabindex="0" aria-label="Replay the nudge">
+      <div class="domino"></div>
+      <div class="domino"></div>
+      <div class="domino"></div>
+      <div class="domino"></div>
+      <div class="domino"></div>
+      <div class="domino"></div>
+      <div class="domino"></div>
+      <div class="domino next-last"></div>
+      <div class="domino last"></div>
+    </div>
+    <p class="dominoes-hint">(go ahead, nudge it)</p>
+    <h1 class="hero-title">
+      <span class="ht-line1">One small</span>
+      <span class="ht-hero">NUDGE.</span>
+      <span class="ht-line3">Everything moves.</span>
+    </h1>
+    <p class="hero-sub">Nudge finds the repetitive work quietly costing your business hours every week — customer replies, scheduling, reporting — and automates it. No big IT project. Just a clear audit, a working fix, and your hours back.</p>
+    <div class="hero-row">
+      <a class="btn" href="https://calendly.com/afuad2041">Book Your Free Audit →</a>
+      <a class="btn ghost" href="#pricing">See Pricing</a>
+      <span class="stamp">Give it a nudge</span>
+    </div>
+  </section>
+
+  <div class="tear" aria-hidden="true"></div>
+
+  <section class="card-bg">
+    <div class="section-head">
+      <h2>Sound familiar?</h2>
+      <span class="eyebrow">The current ticket</span>
+    </div>
+    <div class="ticket">
+      <div class="ticket-row"><span>Calls missed while on a job</span><span class="val">11 / wk</span></div>
+      <div class="ticket-row"><span>Hours lost to manual rescheduling</span><span class="val">6.5 hrs</span></div>
+      <div class="ticket-row"><span>Reports built by hand, every Friday</span><span class="val">late, again</span></div>
+      <div class="ticket-row"><span>Same 5 customer questions, answered manually</span><span class="val">×40 / wk</span></div>
+      <div class="ticket-row"><span>Status</span><span class="val">FIXABLE</span></div>
+    </div>
+    <p class="note">↳ this is the part we automate</p>
+  </section>
+
+  <div class="tear on-2" aria-hidden="true"></div>
+
+  <section>
+    <div class="section-head">
+      <h2>What we do</h2>
+      <span class="eyebrow">Line items</span>
+    </div>
+    <div style="margin-bottom:18px; display:flex; gap:10px; flex-wrap:wrap;">
+      <span class="sticker">No long-term contracts</span>
+      <span class="sticker tilt-right">Audit before we build anything</span>
+    </div>
+    <div class="services">
+      <div class="svc">
+        <span class="tag">01 — CORE</span>
+        <h3>Customer Service Automation</h3>
+        <p>Handle repetitive inquiries, bookings, and follow-ups automatically, without losing the personal touch.</p>
+      </div>
+      <div class="svc">
+        <span class="tag">02 — CORE</span>
+        <h3>Scheduling &amp; Operations</h3>
+        <p>Automate scheduling, reminders, and routine coordination so nothing falls through the cracks.</p>
+      </div>
+      <div class="svc">
+        <span class="tag">03 — CORE</span>
+        <h3>Reporting &amp; Data</h3>
+        <p>Turn manual spreadsheet work into automatic reports you can trust and act on.</p>
+      </div>
+      <div class="svc advanced">
+        <span class="tag">04 — ADVANCED</span>
+        <h3>AI Voice Agents</h3>
+        <p>Custom-trained voice agents for lead intake, booking, and FAQs — answering calls your team can't get to.</p>
+      </div>
+      <div class="svc advanced">
+        <span class="tag">05 — ADVANCED</span>
+        <h3>Predictive Analytics</h3>
+        <p>Forward-looking dashboards that flag trends and support decisions before problems hit.</p>
+      </div>
+      <div class="svc">
+        <span class="tag">— YOURS NEXT</span>
+        <h3>Your Business</h3>
+        <p>Free workflow audit first. We only build what's actually worth fixing.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="tear" aria-hidden="true"></div>
+
+  <section class="card-bg">
+    <div class="section-head">
+      <h2>How it works</h2>
+      <span class="eyebrow">Three steps, in order</span>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">1</span>
+        <h3>Workflow Audit</h3>
+        <p>A short, focused look at where you're losing the most time, plus what we'd fix first. Free or low-cost to start.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <h3>Implementation</h3>
+        <p>We build and deploy the fix for one workflow, with training so your team actually uses it.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <h3>Ongoing Support</h3>
+        <p>Optional monthly support to monitor, maintain, and expand what's working.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="tear on-2" aria-hidden="true"></div>
+
+  <section id="pricing">
+    <div class="section-head">
+      <h2>Pricing</h2>
+      <span class="eyebrow">Itemized, no surprises</span>
+    </div>
+    <div class="invoice ribbon-wrap">
+      <div class="ribbon">Now booking pilots</div>
+      <div class="invoice-head">
+        <span>Package</span><span>What's included</span><span>Starting at</span>
+      </div>
+      <div class="invoice-row">
+        <span>Workflow Audit</span><span class="desc">Assessment + prioritized roadmap</span><span class="price">$2,000–$5,000</span>
+      </div>
+      <div class="invoice-row">
+        <span>Implementation</span><span class="desc">Build &amp; deploy one workflow, with training</span><span class="price">$5,000–$25,000</span>
+      </div>
+      <div class="invoice-row">
+        <span>AI Voice Agent</span><span class="desc">Custom voice agent for booking, intake, or FAQs</span><span class="price">$3,000–$12,000</span>
+      </div>
+      <div class="invoice-row">
+        <span>Predictive Dashboard</span><span class="desc">Forecasting &amp; decision-support build</span><span class="price">$5,000–$15,000</span>
+      </div>
+      <div class="invoice-row">
+        <span>Ongoing Support</span><span class="desc">Monitoring, updates, quarterly check-ins</span><span class="price">$500–$3,000/mo</span>
+      </div>
+      <div class="invoice-foot">Advanced services (voice agents, predictive analytics) are add-ons after your first fix is live — not the starting point.<br>New clients: the Workflow Audit is offered free or reduced for our first few pilots, in exchange for a case study. Ask when you book.</div>
+    </div>
+  </section>
+
+  <div class="tear" aria-hidden="true"></div>
+
+  <section class="cta">
+    <span class="stamp">Free · No obligation</span>
+    <h2>Let's find your hours back.</h2>
+    <p class="hero-sub" style="text-align:center; max-width:44ch;">One short call. We look at where the time is actually going, and tell you straight whether it's worth fixing.</p>
+    <a class="btn" href="https://calendly.com/afuad2041">Book Your Free Audit →</a>
+  </section>
+
+  <div class="hazard" aria-hidden="true"></div>
+
+  <footer>
+    <div>
+      <div class="fbrand">Nudge<span>.</span></div>
+      Give your business its hours back.
+    </div>
+    <div style="text-align:right;">
+      afuad2041@gmail.com<br>
+      nudgeworkflow.com <span class="note" style="font-size:0.95rem;">(launching soon)</span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var el = document.getElementById('dominoes');
+  if(!el) return;
+  function replay(){
+    el.classList.remove('play');
+    void el.offsetWidth;
+    el.classList.add('play');
+  }
+  el.addEventListener('click', replay);
+  el.addEventListener('keypress', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); replay(); }
+  });
+  window.addEventListener('load', replay);
+})();
+</script>
